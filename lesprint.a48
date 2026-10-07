@@ -380,8 +380,10 @@ draw_countdown_digit:
 
         mov    r0,#vdc_char3
 countdown_clear_tail:
+        ; park the hidden character below the screen (y = F8h, as the
+        ; BIOS does for unused characters); at 0,0 it showed as an "A"
         mov    r3,#00h
-        mov    r4,#00h
+        mov    r4,#0F8h
         mov    r5,#_0
         mov    r6,#col_chr_black
         call   printchar
