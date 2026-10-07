@@ -379,29 +379,24 @@ draw_countdown_digit:
         call   printchar
 
         mov    r0,#vdc_char3
+countdown_clear_tail:
         mov    r3,#00h
         mov    r4,#00h
         mov    r5,#_0
         mov    r6,#col_chr_black
         call   printchar
 
-        call   gfxon
-        ret
+        jmp    gfxon
 
 
 clear_countdown:
         ; Hide the final countdown digit before starting the race
+        ; (shares the tail of draw_countdown_digit to keep the code
+        ; inside the first 2K bank - see below)
         call   waitvsync
         call   gfxoff
         mov    r0,#vdc_char2
-        mov    r3,#00h
-        mov    r4,#00h
-        mov    r5,#_0
-        mov    r6,#col_chr_black
-        call   printchar
-        
-        call   gfxon
-        ret
+        jmp    countdown_clear_tail
 
 
 ; ************************************************************
